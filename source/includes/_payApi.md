@@ -4,11 +4,11 @@
 
 ### 应用场景
 
-BitFS支付是指商户在PC端或者移动端网页展示商品或服务，用户在前述页面确认使用BitFS支付时，商户发起本服务呼起BitFS APP进行快速支付。 主要用于智能手机浏览器请求BitFS支付的场景。可以方便地从外部浏览器唤起BitFS支付。当商户商品以法币标价时调用本接口。
+BitFS支付是指商户在PC端或者移动端网页展示商品或服务，用户在前述页面确认使用BitFS支付时，商户发起本服务呼起【BitFS】APP进行快速支付。 主要用于智能手机浏览器请求BitFS支付的场景。可以方便地从外部浏览器唤起BitFS支付。当商户商品以法币标价时调用本接口。
 
 ### 概括
 
-- API名称：充值接口-法币标价
+- API名称：充值接口----法币标价
 
 *  请求方式：HTTP POST
 * 请求URL：pay/v1/unifiedorder
@@ -36,22 +36,22 @@ BitFS支付是指商户在PC端或者移动端网页展示商品或服务，用�
 ~~~
 
 | 字段         | 变量名           | 类型   | 必填  | 示例值                           | 描述                                                         |
-| ------------ | ---------------- | ------ | ----- | -------------------------------- | ------------------------------------------------------------ |
-| 商户ID       | mch_id           | String | true  | 441649692783284224               | BITFS分配的商户ID                                            |
+| ------------ | :--------------- | ------ | :---- | :------------------------------- | :----------------------------------------------------------- |
+| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFS分配的商户ID                                            |
 | 设备类型     | device_type      | String | true  | PC                               | 发起请求的设备来自移动端还是PC端                             |
-| 附加数据     | attach           | String | false | 广州总店                         | 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据。 |
-| 随机字符串   | nonce_str        | String | true  | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串，不长于32位                                       |
+| 附加数据     | attach           | String | false | 广州总店                         | 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据 |
+| 随机字符串   | nonce_str        | String | true  | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串,不长于32位                                        |
 | 商户订单号   | out_trade_no     | String | true  | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部订单号，要求32个字符内，只能是数字、大小写字母且在同一个商户号下唯一 |
 | 终端ip       | spbill_create_ip | String | true  | 127.0.0.1                        | 必须传正确的用户端IP,支持ipv4、ipv6格式                      |
 | 签名类型     | sign_type        | String | false | MD5                              | 签名类型，默认为MD5                                          |
-| 货币类型     | fee_type         | String | true  | CNY                              | 符合ISO 4217标准的三位字母代码，详见法币列表                 |
-| 交易类型     | trade_type       | String | true  | DEPOSI                           | 充币DEPOSIT  提币WITHDRAW                                    |
+| 货币类型     | fee_type         | String | true  | CNY                              | 符合ISO 4217标准的三位字母代码，[详见法币列表](#d6a9971a56)  |
+| 交易类型     | trade_type       | String | true  | DEPOSI                           | 充币：DEPOSIT  提币：WITHDRAW                                |
 | 商品描述     | body             | String | true  | “小游戏-点券充值”                | 商品简单描述，该字段须严格按照规范传递                       |
-| 充值金额     | total_amount     | Int    | true  | 100                              | 订单总金额，单位为分                                         |
-| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BITFS支付异步通知回调地址，详情参考  ”回调通知“          |
+| 充值金额     | total_amount     | Int    | true  | 100                              | 订单总金额，单位为”分“                                       |
+| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFS支付异步通知回调地址，详情参考  ”回调通知"          |
 | 时间戳       | timestamp        | String | true  | 1585471277677                    | 发起订单时的时间毫秒数                                       |
-| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BITFS分配的商户appKey                                        |
-| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，详见签名生成算法                                       |
+| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFS分配的商户appKey                                        |
+| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，[详见签名生成算法](#7b81b8ce22)                        |
 
 ### 返回结果
 
@@ -78,25 +78,25 @@ BitFS支付是指商户在PC端或者移动端网页展示商品或服务，用�
 
 <aside class="notice">以下字段在code为0时有返回</aside>
 
-| 字段         | 变量名     | 必填    | 类型   | 示例值                                                | 描述                                                         |
-| ------------ | ---------- | ------- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
-| 支付跳转链接 | pay_url    | true    | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url为拉起BitFs支付中间页面可通过扫该页面拉起BitFs的App支付界面完成支付，有效时间5分钟 |
-| 商户ID       | mch_id     | true    | String | 441649692783284224                                    | BitFs分配给商户的id                                          |
-| 交易类型     | trade_type | true    | String | DEPOSIT                                               | 充币DEPOSIT  提币WITHDRAW                                    |
-| 随机字符     | nonce_str  | true    | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | BitFs返回的随机字符串                                        |
-| 签名         | sign       | true    | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | BitFs返回的签名                                              |
+| 字段         | 变量名     | 必填 | 类型   | 示例值                                                | 描述                                                         |
+| :----------- | :--------- | :--- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
+| 支付跳转链接 | pay_url    | true | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url为拉起BitFS支付中间页面可通过扫该页面拉起BitFS的App支付界面完成支付，有效时间5分钟 |
+| 商户ID       | mch_id     | true | String | 441649692783284224                                    | BitFS分配给商户的id                                          |
+| 交易类型     | trade_type | true | String | DEPOSIT                                               | 充币:DEPOSIT      提币:WITHDRAW                              |
+| 随机字符     | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | BitFS返回的随机字符串                                        |
+| 签名         | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | BitFS返回的签名                                              |
 
 ### 错误码
 
-| 名称                   | 描述                         | 原因                         | 解决方案                                   |
-| ---------------------- | ---------------------------- | ---------------------------- | ------------------------------------------ |
-| APPKEY_MCHID_NOT_MATCH | 商户machId与商户appkey不匹配 | 商户machId与商户appkey不匹配 | 请确认appid和mch_id是否匹配                |
-| SIGNERROR              | 签名错误                     | 参数签名结果不正确           | 请检查签名参数和方法是否都符合签名算法要求 |
-| OUT_TRADE_NO_USED      | 商户订单号重复               | 同一笔交易不能多次提交       | 请核实商户订单号是否重复提交               |
-| LACK_PARAMS            | 缺少参数                     | 缺少必要的请求参数           | 请检查参数是否齐全                         |
-| SYSTEMERROR            | 系统错误                     | 系统超时                     | 系统异常，请用相同参数重新调用             |
-| COIN_NOT_EXIST         | 币种不支持                   | 请求的币种不支持             | 请参考币种列表上传正确的币种               |
-| ACCOUNT_NOT_EXIST      | 账户不存在                   | 商户账户不存在               | 请对商户账户信息是否正确                   |
+| 名称                   | 描述                         | 原因                         | 解决方案                                    |
+| ---------------------- | ---------------------------- | ---------------------------- | ------------------------------------------- |
+| APPKEY_MCHID_NOT_MATCH | 商户machId与商户appkey不匹配 | 商户machId与商户appkey不匹配 | 请确认appid和mch_id是否匹配                 |
+| SIGNERROR              | 签名错误                     | 参数签名结果不正确           | 请检查签名参数和方法是否都符合签名算法要求  |
+| OUT_TRADE_NO_USED      | 商户订单号重复               | 同一笔交易不能多次提交       | 请核实商户订单号是否重复提交                |
+| LACK_PARAMS            | 缺少参数                     | 缺少必要的请求参数           | 请检查参数是否齐全                          |
+| SYSTEMERROR            | 系统错误                     | 系统超时                     | 系统异常，请用相同参数重新调用              |
+| COIN_NOT_EXIST         | 币种不支持                   | 请求的币种不支持             | 请参考[币种列表](#d6a9971a56)上传正确的币种 |
+| ACCOUNT_NOT_EXIST      | 账户不存在                   | 商户账户不存在               | 请对商户账户信息是否正确                    |
 
 ## 数字货币币种充值接口
 
@@ -135,7 +135,7 @@ BitFS 支付是指商户在PC端或者移动端网页展示商品或服务，用
 
 | 字段         | 变量名           | 类型   | 必填  | 示例值                           | 描述                                                         |
 | ------------ | ---------------- | ------ | ----- | -------------------------------- | ------------------------------------------------------------ |
-| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFs分配的商户ID                                            |
+| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFS分配的商户ID                                            |
 | 设备类型     | device_type      | String | true  | PC                               | 发起请求的设备来自移动端还是PC端。                           |
 | 附加数据     | attach           | String | false | 广州总店                         | 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据。 |
 | 随机字符串   | nonce_str        | String | true  | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串，不长于32位。                                     |
@@ -146,10 +146,10 @@ BitFS 支付是指商户在PC端或者移动端网页展示商品或服务，用
 | 交易类型     | trade_type       | String | true  | DEPOSIT                          | 充币DEPOSIT  提币WITHDRAW                                    |
 | 商品描述     | body             | String | true  | “小游戏-点券充值”                | 商品简单描述，该字段须严格按照规范传递                       |
 | 充值金额     | total_amount     | Int    | true  | 1000                             | 订单总金额；单位为0.001个                                    |
-| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFs支付异步通知回调地址，详情参考  ”回调通知“          |
+| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFS支付异步通知回调地址，详情参考  ”回调通知“          |
 | 时间戳       | timestamp        | String | true  | 1585471277677                    | 发起订单时的时间毫秒数                                       |
-| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFs分配的商户appKey                                        |
-| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，详见签名生成算法，默认MD5                              |
+| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFS分配的商户appKey                                        |
+| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，[详见签名生成算法](#7b81b8ce22)，默认MD5               |
 
 ### 返回结果
 
@@ -177,11 +177,11 @@ BitFS 支付是指商户在PC端或者移动端网页展示商品或服务，用
 
 | 字段         | 变量       | 必填 | 类型   | 示例值                                                | 描述                                                         |
 | ------------ | ---------- | ---- | ------ | ----------------------------------------------------- | ------------------------------------------------------------ |
-| 支付跳转链接 | pay_url    | true | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url为拉起BitFs支付中间页面可通过扫该页面拉起BitFs的App支付界面完成支付，有效时间5分钟 |
-| 商户ID       | mch_id     | true | String | 441649692783284224                                    | BitFs分配给商户的id                                          |
-| 交易类型     | trade_type | true | String | DEPOSIT                                               | 业务类型  充币DEPOSIT  提币WITHDRAW                          |
-| 随机字符     | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | BitFs返回的随机字符串                                        |
-| 签名         | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | BitFs返回的签名                                              |
+| 支付跳转链接 | pay_url    | true | String | http://174.139.156.39:8844/#/currency/currinformation | pay_url为拉起BitFS支付中间页面可通过扫该页面拉起BitFS的App支付界面完成支付，有效时间5分钟 |
+| 商户ID       | mch_id     | true | String | 441649692783284224                                    | BitFS分配给商户的id                                          |
+| 交易类型     | trade_type | true | String | DEPOSIT                                               | 充币:DEPOSIT      提币:WITHDRAW                              |
+| 随机字符     | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C                      | BitFS返回的随机字符串                                        |
+| 签名         | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9                      | BitFS返回的签名                                              |
 
 ### 错误码
 
@@ -218,7 +218,7 @@ NULL
 | 字段       | 变量名 | 必填 | 类型        | 示例值  | 描述                                            |
 | ---------- | ------ | ---- | ----------- | ------- | ----------------------------------------------- |
 | 返回状态码 | code   | true | Int         | 0       | 返回码，调用成功时返回0                         |
-| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如 请求超时 |
+| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如:请求超时 |
 
 <aside class="notice">以下字段在code=0时有返回</aside>
 
@@ -248,7 +248,7 @@ NULL
 | 字段       | 变量名 | 必填 | 类型        | 示例值  | 描述                                            |
 | ---------- | ------ | ---- | ----------- | ------- | ----------------------------------------------- |
 | 返回状态码 | code   | true | Int         | 0       | 返回码，调用成功时返回0                         |
-| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如 请求超时 |
+| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如:请求超时 |
 
 <aside class="notice">以下字段在code=0时有返回</aside>
 
@@ -294,20 +294,20 @@ NULL
 
 | 字段         | 变量名           | 类型   | 必填  | 示例值                           | 描述                                                         |
 | ------------ | ---------------- | ------ | ----- | -------------------------------- | ------------------------------------------------------------ |
-| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFs分配的商户ID                                            |
+| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFS分配的商户ID                                            |
 | 提币账号     | get_account      | String | true  | 13899996666                      | 发起提币的账户。                                             |
 | 附加数据     | attach           | String | false | 普通提币                         | 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据。 |
 | 随机字符串   | nonce_str        | String | true  | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串，不长于32位。                                     |
 | 商户订单号   | out_trade_no     | String | true  | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部的订单号,32个字符内、可包含字母。                |
 | 签名类型     | sign_type        | String | true  | MD5                              | 签名类型，默认为MD5                                          |
 | 终端ip       | spbill_create_ip | String | true  | 127.0.0.1                        | 必须传正确的用户端IP,支持ipv4、ipv6格式                      |
-| 货币类型     | fee_type         | String | true  | CNY                              | 符合ISO 4217标准的三位字母代码，详见法币列表                 |
-| 交易类型     | trade_type       | String | true  | WITHDRAW                         | 充币DEPOSIT  提币WITHDRAW                                    |
+| 货币类型     | fee_type         | String | true  | CNY                              | 符合ISO 4217标准的三位字母代码，[详见法币列表](#d6a9971a56)  |
+| 交易类型     | trade_type       | String | true  | WITHDRAW                         | 充币：DEPOSIT  提币：WITHDRAW                                |
 | 充值金额     | total_amount     | Int    | true  | 1000                             | 订单总金额，单位为0.001个                                    |
-| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFs支付异步通知回调地址，详情参考  ”回调通知“          |
+| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFS支付异步通知回调地址，详情参考  ”回调通知“          |
 | 时间戳       | timestamp        | String | true  | 1585471277677                    | 发起订单时的时间毫秒数                                       |
-| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFs分配的商户appKey                                        |
-| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，详见签名生成算法，默认MD5                              |
+| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFS分配的商户appKey                                        |
+| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，[详见签名生成算法](#7b81b8ce22)，默认MD5               |
 
 ### 返回结果
 
@@ -329,16 +329,16 @@ NULL
 | 字段       | 变量名 | 必填 | 类型        | 示例值  | 描述                                                         |
 | ---------- | ------ | ---- | ----------- | ------- | ------------------------------------------------------------ |
 | 返回状态码 | code   | true | Int         | 0       | 网关返回码，调用成功时返回0                                  |
-| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如  签名失败  参数格式校验错误 |
+| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如 :签名失败  参数格式校验错误 |
 
 <aside class="notice">以下字段在code为0时有返回</aside>
 
-| 字段     | 变量       | 必填 | 类型   | 示例值                           | 描述                      |
-| -------- | ---------- | ---- | ------ | -------------------------------- | ------------------------- |
-| 商户ID   | mch_id     | true | String | 441649692783284224               | BitFs分配给商户的id       |
-| 交易类型 | trade_type | true | String | WITHDRAW                         | 充币DEPOSIT  提币WITHDRAW |
-| 随机字符 | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C | BitFs返回的随机字符串     |
-| 签名     | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | BitFs返回的签名           |
+| 字段     | 变量       | 必填 | 类型   | 示例值                           | 描述                        |
+| -------- | ---------- | ---- | ------ | -------------------------------- | --------------------------- |
+| 商户ID   | mch_id     | true | String | 441649692783284224               | BitFS分配给商户的id         |
+| 交易类型 | trade_type | true | String | WITHDRAW                         | 充币:DEPOSIT  提币:WITHDRAW |
+| 随机字符 | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C | BitFS返回的随机字符串       |
+| 签名     | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | BitFS返回的签名             |
 
 ### 错误码
 
@@ -390,20 +390,20 @@ NULL
 
 | 字段         | 变量名           | 类型   | 必填  | 示例值                           | 描述                                                         |
 | ------------ | ---------------- | ------ | ----- | -------------------------------- | ------------------------------------------------------------ |
-| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFs分配的商户ID                                            |
+| 商户ID       | mch_id           | String | true  | 441649692783284224               | BitFS分配的商户ID                                            |
 | 提币账号     | get_account      | String | true  | 13899996666                      | 发起提币的账户。                                             |
 | 附加数据     | attach           | String | false | 普通提币                         | 附加数据，在查询API和支付通知中原样返回，该字段主要用于商户携带订单的自定义数据。 |
 | 随机字符串   | nonce_str        | String | true  | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串，不长于32位。                                     |
 | 商户订单号   | out_trade_no     | String | true  | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部的订单号,32个字符内、可包含字母。                |
 | 签名类型     | sign_type        | String | true  | MD5                              | 签名类型，默认为MD5                                          |
 | 终端ip       | spbill_create_ip | String | true  | 127.0.0.1                        | 必须传正确的用户端IP,支持ipv4、ipv6格式                      |
-| 货币类型     | fee_type         | String | true  | BTC                              | 提币的币编码，详见法币列表                                   |
+| 货币类型     | fee_type         | String | true  | BTC                              | 提币的币编码，[详见法币列表](#d6a9971a56)                    |
 | 交易类型     | trade_type       | String | true  | WITHDRAW                         | 充币DEPOSIT  提币WITHDRAW                                    |
 | 充值金额     | total_amount     | Int    | true  | 1000                             | 订单总金额，单位为0.001个                                    |
-| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFs支付异步通知回调地址，详情参考  ”回调通知“          |
+| 结果通知地址 | notify_url       | String | true  | https://www.baidu.com            | 接收BitFS支付异步通知回调地址，详情参考  ”回调通知“          |
 | 时间戳       | timestamp        | String | true  | 1585471277677                    | 发起订单时的时间毫秒数                                       |
-| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFs分配的商户appKey                                        |
-| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，详见签名生成算法，默认MD5                              |
+| 商户appKey   | appKey           | String | true  | 1e75e94982f80bd1f219ea807af96bd5 | BitFS分配的商户appKey                                        |
+| 签名         | sign             | String | true  | 13F9609AA53A8AEBED5516EE8696A995 | 签名，[详见签名生成算法](#7b81b8ce22)，默认MD5               |
 
 ### 返回结果
 
@@ -429,12 +429,12 @@ NULL
 
 <aside class="notice">以下字段在code为0时有返回</aside>
 
-| 字段     | 变量       | 必填 | 类型   | 示例值                           | 描述                      |
-| -------- | ---------- | ---- | ------ | -------------------------------- | ------------------------- |
-| 商户ID   | mch_id     | true | String | 441649692783284224               | BitFs分配给商户的id       |
-| 交易类型 | trade_type | true | String | WITHDRAW                         | 充币DEPOSIT  提币WITHDRAW |
-| 随机字符 | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C | BitFs返回的随机字符串     |
-| 签名     | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | BitFs返回的签名           |
+| 字段     | 变量       | 必填 | 类型   | 示例值                           | 描述                        |
+| -------- | ---------- | ---- | ------ | -------------------------------- | --------------------------- |
+| 商户ID   | mch_id     | true | String | 441649692783284224               | BitFS分配给商户的id         |
+| 交易类型 | trade_type | true | String | WITHDRAW                         | 充币:DEPOSIT  提币:WITHDRAW |
+| 随机字符 | nonce_str  | true | String | FEC838C0BEA5468A82E2467DA4F70B8C | BitFS返回的随机字符串       |
+| 签名     | sign       | true | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | BitFS返回的签名             |
 
 ### 错误码
 
@@ -508,7 +508,7 @@ NULL
 | 字段       | 变量名 | 必填 | 类型        | 示例值  | 描述                                                 |
 | ---------- | ------ | ---- | ----------- | ------- | ---------------------------------------------------- |
 | 返回状态码 | code   | true | Int         | 0       | 网关返回码，调用成功时返回0                          |
-| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如  参数校验错误 |
+| 返回信息   | msg    | true | String(255) | success | 当code不为0时返回信息为错误原因 ，例如 :参数校验错误 |
 
 <aside class="notice">以下字段在code为0时有返回</aside>
 
@@ -607,18 +607,18 @@ NULL
 
 | 字段              | 变量             | 必填  | 类型   | 示例值                           | 描述                                                         |
 | ----------------- | ---------------- | ----- | ------ | -------------------------------- | ------------------------------------------------------------ |
-| 商户ID            | mch_id           | true  | String | 441649692783284224               | BitFs分配的商户                                              |
-| Bitfs交易用户标识 | customer_id      | false | String | 442314630598103040               | 扫码交易用户标识，当用户扫码获取订单时该字段有返回。         |
+| 商户ID            | mch_id           | true  | String | 441649692783284224               | BitFS分配的商户                                              |
+| BitFS交易用户标识 | customer_id      | false | String | 442314630598103040               | 扫码交易用户标识，当用户扫码获取订单时该字段有返回。         |
 | 商户订单号        | out_trade_no     | true  | String | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部的订单号,32个字符内、可包含字母。                |
 | 随机字符串        | nonce_str        | true  | String | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串                                                   |
 | 请求金额          | total_amount     | true  | String | 14.14                            | 商户请求交易的金额；当fee_type为法币时单位为元；当fee_type为数字货币时单位为 1个 |
-| Bitfs订单号       | transaction_id   | true  | String | 44240523622d4b2ca836176cd88085d3 | BitFs生成的订单号                                            |
+| BitFS订单号       | transaction_id   | true  | String | 44240523622d4b2ca836176cd88085d3 | BitFS生成的订单号                                            |
 | 交易类型          | trade_type       | true  | String | WITHDRAW                         | 充币DEPOSIT  提币WITHDRAW                                    |
-| 交易币种          | fee_type         | true  | String | CNY                              | 发起请求的交易币种，分为法币和数字货币，详见币种列表。       |
-| 交易行情          | tick_price       | true  | String | 7.00                             | 发起请求时的bitfs行情价。                                    |
+| 交易币种          | fee_type         | true  | String | CNY                              | 发起请求的交易币种，分为法币和数字货币，[详见币种列表](#d6a9971a56)。 |
+| 交易行情          | tick_price       | true  | String | 7.00                             | 发起请求时的BitFS行情价。                                    |
 | 订单金额          | order_fee        | true  | String | 2.02                             | 实际交易的数字货币（USDT）数量。                             |
 | 附加信息          | attach           | false | String | ”广州分店充值“                   | 商家的附加信息                                               |
-| 交易状态          | trade_state      | true  | String | 100                              | 100 交易成功  200 交易失败  300 交易取消                     |
+| 交易状态          | trade_state      | true  | String | 100                              | 100 交易成功 ;200 交易失败;300 交易取消                      |
 | 交易状态描述      | trade_state_desc | true  | String | 交易取消                         | 对交易状态的描述。                                           |
 | 签名              | sign             | true  | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | 签名。                                                       |
 
@@ -672,18 +672,18 @@ NULL
 
 | 字段              | 变量             | 必填  | 类型   | 示例值                           | 描述                                                         |
 | ----------------- | ---------------- | ----- | ------ | -------------------------------- | ------------------------------------------------------------ |
-| 商户ID            | mch_id           | true  | String | 441649692783284224               | BitFs分配的商户                                              |
-| Bitfs交易用户标识 | customer_id      | false | String | 442314630598103040               | 扫码交易用户标识，当用户扫码获取订单时该字段有返回。         |
+| 商户ID            | mch_id           | true  | String | 441649692783284224               | BitFS分配的商户                                              |
+| BitFS交易用户标识 | customer_id      | false | String | 442314630598103040               | 扫码交易用户标识，当用户扫码获取订单时该字段有返回。         |
 | 商户订单号        | out_trade_no     | true  | String | 7faf7e60a92d4afa963b83933a949ecc | 商户系统内部的订单号,32个字符内、可包含字母。                |
 | 随机字符串        | nonce_str        | true  | String | FEC838C0BEA5468A82E2467DA4F70B8C | 随机字符串                                                   |
 | 请求金额          | total_amount     | true  | String | 14.14                            | 当fee_type为法币时单位为元；当fee_type为数字货币时单位为 1个 |
-| Bitfs订单号       | transaction_id   | true  | String | 44240523622d4b2ca836176cd88085d3 | BitFs生成的订单号                                            |
+| BitFS订单号       | transaction_id   | true  | String | 44240523622d4b2ca836176cd88085d3 | BitFS生成的订单号                                            |
 | 交易类型          | trade_type       | true  | String | WITHDRAW                         | 充币DEPOSIT  提币WITHDRAW                                    |
-| 交易行情          | tick_price       | true  | String | 7.00                             | 发起请求时的bitfs行情价。                                    |
+| 交易行情          | tick_price       | true  | String | 7.00                             | 发起请求时的BitFS行情价。                                    |
 | 订单金额          | order_fee        | true  | String | 2.02                             | 实际交易的数字货币（USDT）数量。                             |
-| 交易币种          | fee_type         | true  | String | CNY                              | 发起请求的交易币种，分为法币和数字货币，详见币种列表。       |
+| 交易币种          | fee_type         | true  | String | CNY                              | 发起请求的交易币种，分为法币和数字货币，[详见币种列表](#d6a9971a56)。 |
 | 附加信息          | attach           | false | String | ”广州分店充值“                   | 商家的附加信息                                               |
-| 交易状态          | trade_state      | true  | String | 100                              | 100 交易成功  200 交易失败  300 交易取消                     |
+| 交易状态          | trade_state      | true  | String | 100                              | 100 交易成功;200 交易失败;300 交易取消                       |
 | 交易状态描述      | trade_state_desc | true  | String | 交易取消                         | 对交易状态的描述。                                           |
 | 签名              | sign             | true  | String | F752ABD95162A4A95E7C4A5E33DAEDD9 | 签名。                                                       |
 
@@ -757,15 +757,13 @@ key设置路径：BitFS 商户平台-->设置-->商家私钥设置
 
 
 
-**生成随机数算法**
+生成随机数算法
 
 BitFS API接口协议中包含字段nonce_str，主要保证签名不可预测。推荐调用随机数函数生成，将得到的值转换为字符串。
 
 
 
-
-
-### 交易货币类型
+## 交易货币类型
 
 **1.法币类型**
 
@@ -773,6 +771,8 @@ BitFS API接口协议中包含字段nonce_str，主要保证签名不可预测�
 | -------- | -------- |
 | 人民币   | CNY      |
 | 美元     | USD      |
+
+
 
 
 
