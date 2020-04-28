@@ -1,1 +1,3 @@
-BitFS----商家api文档
+BitFS----商家接入api文档 
+
+ 

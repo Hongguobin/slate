@@ -38,6 +38,9 @@ end
 activate :relative_assets
 set :relative_links, true
 
+# i18n
+activate :i18n
+
 # Build Configuration
 configure :build do
   activate :asset_hash
